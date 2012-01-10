@@ -33,6 +33,12 @@ class LookupChannel(object):
         """ The text result of autocompleting the entered query """
         return unicode(obj)
 
+    def format_item_custom(self, obj):
+        """ Additional, custom data for an item, returned in the json.
+            Can override any of the default fields (pk, label, value, repr)
+            if necessary, although it's not recommended. """
+        return {}
+
     def format_match(self,obj):
         """ (HTML) formatted item for displaying item in the dropdown """
         return unicode(obj)
@@ -186,6 +192,11 @@ def get_lookup(channel):
             setattr(lookup_class, 'get_result',
                 getattr(lookup_class,'format_result',
                     lambda self,obj: unicode(obj)))
+        if not hasattr(lookup_class,'format_item_custom'):
+            setattr(lookup_class, 'format_item_custom',
+                getattr(lookup_class,'format_item_custom',
+                    lambda self,obj: {}))
+
 
         return lookup_class()
 

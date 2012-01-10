@@ -31,16 +31,18 @@ def ajax_lookup(request,channel):
     else:
         instances = []
 
-    results = simplejson.dumps([
-        {
+    results = []
+    for item in instances:
+        tmp = {
             'pk': unicode(getattr(item,'pk',None)),
             'value': lookup.get_result(item),
             'label' : lookup.format_match(item),
-            'repr': lookup.format_item_display(item)
-        } for item in instances
-    ])
+            'repr': lookup.format_item_display(item),
+        }
+        tmp.update(lookup.format_item_custom(item))
+        results.append(tmp)
 
-    return HttpResponse(results, mimetype='application/javascript')
+    return HttpResponse(simplejson.dumps(results), mimetype='application/javascript')
 
 
 def add_popup(request,app_label,model):
