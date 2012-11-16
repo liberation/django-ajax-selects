@@ -102,7 +102,8 @@ class AutoCompleteSelectField(forms.fields.CharField):
                 channel = channel,
                 help_text = kwargs.get('help_text',_(as_default_help)),
                 show_help_text = kwargs.pop('show_help_text',True),
-                plugin_options = kwargs.pop('plugin_options',{})
+                plugin_options = kwargs.pop('plugin_options',{}),
+                attrs = kwargs.pop('attrs', {}),
             )
             kwargs["widget"] = AutoCompleteSelectWidget(**widget_kwargs)
         super(AutoCompleteSelectField, self).__init__(max_length=255,*args, **kwargs)
