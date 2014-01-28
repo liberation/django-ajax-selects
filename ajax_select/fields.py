@@ -1,4 +1,3 @@
-
 from ajax_select import get_lookup
 from django import forms
 from django.conf import settings
@@ -78,7 +77,7 @@ class AutoCompleteSelectWidget(forms.widgets.TextInput):
 
         got = data.get(name, None)
         if got:
-            return long(got)
+            return got
         else:
             return None
 
